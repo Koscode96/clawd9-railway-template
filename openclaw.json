@@ -1,0 +1,52 @@
+{
+  "$schema": "https://openclaw.ai/schema/config.json",
+  "version": "1.0.0",
+  "gateway": {
+    "port": 18789,
+    "auth": {
+      "token": "${OPENCLAW_GATEWAY_TOKEN}"
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-sonnet-4-20250514",
+        "fallback": "openai/gpt-4o"
+      },
+      "persona": {
+        "name": "Clawd",
+        "role": "Real Estate AI Assistant",
+        "description": "A professional AI agent specialized in UK real estate operations including sales, lettings, and property management."
+      },
+      "skills": [
+        "clawd9-real-estate"
+      ],
+      "sandbox": {
+        "mode": "docker"
+      },
+      "maxConcurrent": 4
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "allowFrom": []
+    },
+    "email": {
+      "enabled": false
+    },
+    "whatsapp": {
+      "enabled": false
+    }
+  },
+  "memory": {
+    "enabled": true,
+    "persistence": "file",
+    "path": "${OPENCLAW_WORKSPACE}/memory"
+  },
+  "logging": {
+    "level": "info",
+    "format": "json"
+  }
+}
