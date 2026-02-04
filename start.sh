@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Clawd9 Railway Template Start Script
 echo "🏠 Starting Clawd9 - AI Agents for Real Estate"
@@ -16,18 +17,26 @@ if [ ! -f "$OPENCLAW_CONFIG/openclaw.json" ]; then
     cp /app/openclaw.json $OPENCLAW_CONFIG/openclaw.json
 fi
 
-# Run onboarding if no auth configured
-if [ -z "$ANTHROPIC_API_KEY" ] && [ -z "$OPENAI_API_KEY" ]; then
-    echo "🔑 No API key found. Starting setup wizard..."
-    openclaw onboard --config $OPENCLAW_CONFIG/openclaw.json
-else
-    echo "✅ API key detected"
+# Check for API key
+if [ -z "$ANTHROPIC_API_KEY" ]; then
+    echo "❌ Error: ANTHROPIC_API_KEY is required"
+    exit 1
+fi
+
+echo "✅ API key detected"
+
+# Check if openclaw is installed
+if ! command -v openclaw &> /dev/null; then
+    echo "❌ OpenClaw not found, installing..."
+    npm install -g openclaw@latest
 fi
 
 # Start the gateway
-echo "🚀 Starting OpenClaw gateway on port 18789..."
-openclaw gateway \
+echo "🚀 Starting OpenClaw gateway..."
+echo "📡 Telegram bot will connect automatically if TELEGRAM_BOT_TOKEN is set"
+
+# Run openclaw with environment variables
+exec openclaw gateway \
     --port 18789 \
     --config $OPENCLAW_CONFIG/openclaw.json \
-    --workspace $OPENCLAW_WORKSPACE \
-    --verbose
+    --workspace $OPENCLAW_WORKSPACE
