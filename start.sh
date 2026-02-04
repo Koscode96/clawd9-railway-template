@@ -30,5 +30,5 @@ echo "✅ API key detected"
 echo "🚀 Starting OpenClaw gateway..."
 echo "📡 Telegram bot will connect automatically if TELEGRAM_BOT_TOKEN is set"
 
-# Run openclaw gateway with allow-unconfigured for headless mode
+# Run openclaw gateway
 exec openclaw gateway --allow-unconfigured --port ${PORT:-18789}
