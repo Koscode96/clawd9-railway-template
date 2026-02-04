@@ -1,14 +1,15 @@
 {
   "gateway": {
-    "port": 18789
-  },
-  "auth": {
-    "profiles": {}
+    "mode": "local",
+    "port": 18789,
+    "auth": {
+      "allowNoAuth": true
+    }
   },
   "routing": {
     "agents": {
       "main": {
-        "workspace": "/data/workspace",
+        "workspace": "~/.openclaw/workspace",
         "model": {
           "provider": "anthropic",
           "model": "claude-sonnet-4-20250514"
